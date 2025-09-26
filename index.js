@@ -55,13 +55,28 @@ app.get('/api/ice-servers', (req, res) => {
   ];
 
   // Add TURN server if credentials are provided via environment variables
-  if (process.env.TURN_SERVER_URL && process.env.TURN_USERNAME && process.env.TURN_CREDENTIAL) {
-    iceServers.push({
-      urls: process.env.TURN_SERVER_URL,
-      username: process.env.TURN_USERNAME,
-      credential: process.env.TURN_CREDENTIAL
-    });
-  }
+  const iceServers: RTCIceServer[] = [
+  {
+    urls: ["stun:bn-turn1.xirsys.com"],
+  },
+];
+
+// Add TURN server if credentials are provided via environment variables
+if (process.env.TURN_SERVER_URL && process.env.TURN_USERNAME && process.env.TURN_CREDENTIAL) {
+  iceServers.push({
+    urls: [
+      "turn:bn-turn1.xirsys.com:80?transport=udp",
+      "turn:bn-turn1.xirsys.com:3478?transport=udp",
+      "turn:bn-turn1.xirsys.com:80?transport=tcp",
+      "turn:bn-turn1.xirsys.com:3478?transport=tcp",
+      "turns:bn-turn1.xirsys.com:443?transport=tcp",
+      "turns:bn-turn1.xirsys.com:5349?transport=tcp"
+    ],
+    username: process.env.TURN_USERNAME,
+    credential: process.env.TURN_CREDENTIAL,
+  });
+}
+
 
   res.json({ iceServers });
 });
