@@ -51,15 +51,14 @@ app.get('/api/ice-servers', (req, res) => {
     },
     {
       urls: 'stun:stun3.l.google.com:19302'
-    }
+    },
+     {
+    urls: ["stun:bn-turn1.xirsys.com"],
+  },
   ];
 
   // Add TURN server if credentials are provided via environment variables
-  const iceServers: RTCIceServer[] = [
-  {
-    urls: ["stun:bn-turn1.xirsys.com"],
-  },
-];
+  ;
 
 // Add TURN server if credentials are provided via environment variables
 if (process.env.TURN_SERVER_URL && process.env.TURN_USERNAME && process.env.TURN_CREDENTIAL) {
